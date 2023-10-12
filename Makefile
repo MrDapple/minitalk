@@ -1,25 +1,30 @@
-OBJCS		:=
+OBJSERVER	:=	server.o \
+
+OBJCLIENT	:=	client.o \
 
 LIBFT		:=	libft/libft.a
 
-NAME		:=	so_long
+NAME		:=	server
+CLIENT		:=	client
 CFLAGS		?=	-Wall -Wextra -Werror
-SFLAGS		:=	
+SFLAGS		:=
 
-all			:	$(NAME)
+all			:	$(NAME) $(CLIENT)
 
-$(NAME)		:	$(OBJCS)
-	$(CC) $(OBJCS) $(LIBFT) $(CFLAGS) $(SFLAGS) -o $(NAME)
+$(NAME)		:	$(OBJSERVER)
+	$(CC) $(OBJSERVER) $(LIBFT) $(CFLAGS) $(SFLAGS) -o $(NAME)
+
+$(CLIENT)	:	$(OBJCLIENT)
+	$(CC) $(OBJCLIENT) $(LIBFT) $(CFLAGS) $(SFLAGS) -o $(CLIENT)
 
 %.o			:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 clean		:
-	rm -f $(OBJCS)
+	rm -f $(OBJSERVER) $(OBJCLIENT)
 
 fclean		:	clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(CLIENT)
 
 re			:	fclean all
 
