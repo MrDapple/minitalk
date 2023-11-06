@@ -2,29 +2,33 @@ OBJSERVER	:=	server.o \
 
 OBJCLIENT	:=	client.o \
 
-LIBFT		:=	libft/libft.a
-
+LIBFT_A		:=	libft/libft.a
 NAME		:=	server
 CLIENT		:=	client
-CFLAGS		?=	-Wall -Wextra -Werror
-SFLAGS		:=
 
-all			:	$(NAME) $(CLIENT)
+CFLAGS		:=	-Wall -Wextra -Werror
 
-$(NAME)		:	$(OBJSERVER)
-	$(CC) $(OBJSERVER) $(LIBFT) $(CFLAGS) $(SFLAGS) -o $(NAME)
+all			:	libgen $(NAME) $(CLIENT)
 
-$(CLIENT)	:	$(OBJCLIENT)
-	$(CC) $(OBJCLIENT) $(LIBFT) $(CFLAGS) $(SFLAGS) -o $(CLIENT)
+libgen		:
+	@make -C libft
+
+$(NAME)		:	minitalk.h $(OBJSERVER)
+	$(CC) $(OBJSERVER) $(LIBFT_A) $(CFLAGS) $(SFLAGS) -o $(NAME)
+
+$(CLIENT)	:	minitalk.h $(OBJCLIENT)
+	$(CC) $(OBJCLIENT) $(LIBFT_A) $(CFLAGS) $(SFLAGS) -o $(CLIENT)
 
 %.o			:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean		:
 	rm -f $(OBJSERVER) $(OBJCLIENT)
+	make clean -C libft
 
 fclean		:	clean
 	rm -f $(NAME) $(CLIENT)
+	make fclean -C libft
 
 re			:	fclean all
 

@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printf_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:35:16 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:34:35 by anvoets          ###   ########.fr       */
+/*   Created: 2023/05/10 16:38:59 by anvoets           #+#    #+#             */
+/*   Updated: 2023/10/11 12:06:09 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <signal.h>
+int	ft_printf_str(char *str)
+{
+	int	i;
+	int	buf;
 
-void	send_signal(int pid, unsigned char chr);
-void	sig_handler(int sig);
-
-#endif
+	i = 0;
+	buf = 0;
+	if (!str)
+		return (ft_printf_str("(null)"));
+	while (str[i])
+	{
+		buf = write(1, &str[i], 1);
+		if (buf == -1)
+			return (buf);
+		i++;
+	}
+	return (i);
+}

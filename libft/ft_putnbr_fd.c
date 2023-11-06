@@ -1,47 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:48:19 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:38:43 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/24 12:58:23 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/02 15:40:16 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	sig_handler(int sig)
+void	ft_putnbr_fd(int n, int fd)
 {
-	static int				i = 0;
-	static unsigned char	c;
-
-	if (sig == SIGUSR2)
+	if (!fd)
+		return ;
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n <= 9 && n >= 0)
+		ft_putchar_fd(n + '0', fd);
+	else if (n < 0)
 	{
-		c = c << 1;
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(n * -1, fd);
 	}
-	else if (sig == SIGUSR1)
+	else if (n > 9)
 	{
-		c = (c << 1) | 1;
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
 	}
-	i++;
-	if (i == 8)
-	{
-		ft_printf("%c", c);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID:	%d\n", getpid());
-	while (1)
-	{
-		signal(SIGUSR1, sig_handler);
-		signal(SIGUSR2, sig_handler);
-		pause();
-	}
-	exit(EXIT_FAILURE);
 }

@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:35:16 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:34:35 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/06 10:35:09 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 10:36:01 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <signal.h>
-
-void	send_signal(int pid, unsigned char chr);
-void	sig_handler(int sig);
-
-#endif
+void	*ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+	return (s);
+}

@@ -1,47 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:48:19 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:38:43 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/28 16:20:20 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 14:59:09 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	sig_handler(int sig)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	static int				i = 0;
-	static unsigned char	c;
+	t_list	*begin;
+	t_list	*new;
+	void	*temp;
 
-	if (sig == SIGUSR2)
+	if (!f || !del)
+		return (NULL);
+	begin = NULL;
+	while (lst)
 	{
-		c = c << 1;
+		temp = f(lst->content);
+		new = ft_lstnew(temp);
+		if (!new)
+		{
+			free(temp);
+			ft_lstclear(&begin, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&begin, new);
+		lst = lst->next;
 	}
-	else if (sig == SIGUSR1)
-	{
-		c = (c << 1) | 1;
-	}
-	i++;
-	if (i == 8)
-	{
-		ft_printf("%c", c);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID:	%d\n", getpid());
-	while (1)
-	{
-		signal(SIGUSR1, sig_handler);
-		signal(SIGUSR2, sig_handler);
-		pause();
-	}
-	exit(EXIT_FAILURE);
+	return (begin);
 }

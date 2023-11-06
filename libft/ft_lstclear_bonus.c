@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:35:16 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:34:35 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/28 14:10:35 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 15:22:24 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <signal.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*temp;
+	t_list	*buff;
 
-void	send_signal(int pid, unsigned char chr);
-void	sig_handler(int sig);
-
-#endif
+	if (!lst || !del)
+		return ;
+	temp = *lst;
+	while (temp)
+	{
+		buff = temp;
+		(*del)(temp->content);
+		temp = temp->next;
+		free(buff);
+	}
+	*lst = NULL;
+}

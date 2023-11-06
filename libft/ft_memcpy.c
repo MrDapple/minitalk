@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:35:16 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:34:35 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/11 16:10:06 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 10:37:17 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <signal.h>
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	char	*srcb;
+	char	*dstb;
+	size_t	cnt;
 
-void	send_signal(int pid, unsigned char chr);
-void	sig_handler(int sig);
-
-#endif
+	if (dst == NULL && src == NULL)
+		return (0);
+	dstb = (char *)dst;
+	srcb = (char *)src;
+	cnt = 0;
+	while (cnt < n)
+	{
+		dstb[cnt] = (unsigned char)srcb[cnt];
+		cnt++;
+	}
+	return (dst);
+}

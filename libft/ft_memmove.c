@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:35:16 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:34:35 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/12 11:10:03 by anvoets           #+#    #+#             */
+/*   Updated: 2023/10/11 12:06:27 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <signal.h>
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	const char	*srcb;
+	char		*dstb;
 
-void	send_signal(int pid, unsigned char chr);
-void	sig_handler(int sig);
-
-#endif
+	if (!dst && !src)
+		return (NULL);
+	dstb = dst;
+	srcb = src;
+	if (srcb < dstb)
+	{
+		while (len--)
+			dstb[len] = srcb[len];
+		return (dst);
+	}
+	return (ft_memcpy(dst, src, len));
+}

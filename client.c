@@ -6,7 +6,7 @@
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:12:15 by anvoets           #+#    #+#             */
-/*   Updated: 2023/10/12 17:49:09 by anvoets          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:39:05 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	send_signal(int pid, unsigned char chr)
 	while (i > 0)
 	{
 		i--;
-		if(chr & 1 << i)
+		if (chr & 1 << i)
 		{
 			if (kill(pid, SIGUSR1) == -1)
-				exit (1);
+				exit(EXIT_FAILURE);
 		}
 		else
 		{
 			if (kill(pid, SIGUSR2) == -1)
-				exit (1);
+				exit(EXIT_FAILURE);
 		}
-		usleep(100);
+		usleep(50);
 	}
 }
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 	int	i;
 
 	if (argc != 3)
-		return (0);
+		exit(EXIT_FAILURE);
 	i = 0;
 	pid = ft_atoi(argv[1]);
 	while (argv[2][i])
@@ -50,5 +50,5 @@ int	main(int argc, char **argv)
 		send_signal(pid, argv[2][i]);
 		i++;
 	}
-	return (0);
+	exit(EXIT_FAILURE);
 }

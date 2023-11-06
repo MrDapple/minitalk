@@ -1,47 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:48:19 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:38:43 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/03 16:29:10 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 10:37:54 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-void	sig_handler(int sig)
+char	*ft_strchr(const char *s, int c)
 {
-	static int				i = 0;
-	static unsigned char	c;
+	int	cnt;
 
-	if (sig == SIGUSR2)
+	cnt = 0;
+	while (s[cnt])
 	{
-		c = c << 1;
+		if ((unsigned char)s[cnt] == (unsigned char)c)
+			return ((char *)&s[cnt]);
+		cnt++;
 	}
-	else if (sig == SIGUSR1)
-	{
-		c = (c << 1) | 1;
-	}
-	i++;
-	if (i == 8)
-	{
-		ft_printf("%c", c);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID:	%d\n", getpid());
-	while (1)
-	{
-		signal(SIGUSR1, sig_handler);
-		signal(SIGUSR2, sig_handler);
-		pause();
-	}
-	exit(EXIT_FAILURE);
+	if ((unsigned char)c == '\0')
+		return ((char *)&s[cnt]);
+	return (0);
 }

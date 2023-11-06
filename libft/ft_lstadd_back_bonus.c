@@ -1,47 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anvoets <anvoets@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:48:19 by anvoets           #+#    #+#             */
-/*   Updated: 2023/11/06 15:38:43 by anvoets          ###   ########.fr       */
+/*   Created: 2023/04/27 17:29:27 by anvoets           #+#    #+#             */
+/*   Updated: 2023/05/01 10:36:36 by anvoets          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	sig_handler(int sig)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	static int				i = 0;
-	static unsigned char	c;
-
-	if (sig == SIGUSR2)
+	if (!lst)
+		return ;
+	while (*lst)
 	{
-		c = c << 1;
+		lst = &(*lst)->next;
 	}
-	else if (sig == SIGUSR1)
-	{
-		c = (c << 1) | 1;
-	}
-	i++;
-	if (i == 8)
-	{
-		ft_printf("%c", c);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID:	%d\n", getpid());
-	while (1)
-	{
-		signal(SIGUSR1, sig_handler);
-		signal(SIGUSR2, sig_handler);
-		pause();
-	}
-	exit(EXIT_FAILURE);
+	*lst = new;
 }
